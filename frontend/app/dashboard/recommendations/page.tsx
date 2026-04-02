@@ -4,7 +4,9 @@ import { useState } from "react";
 import { Sparkles, Leaf, TestTube, Thermometer, CloudRain, Droplets, FlaskConical } from "lucide-react";
 
 export default function SmartRecommendations() {
-  const [formData, setFormData] = useState({
+  type FormDataKey = 'N' | 'P' | 'K' | 'pH' | 'temperature' | 'humidity' | 'rainfall';
+
+  const [formData, setFormData] = useState<Record<FormDataKey, number>>({
     N: 50,
     P: 50,
     K: 50,
@@ -29,7 +31,10 @@ export default function SmartRecommendations() {
     setResult(null);
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/recommend/fertilizer", {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      if (!apiUrl) throw new Error("NEXT_PUBLIC_API_URL is not configured");
+      
+      const res = await fetch(`${apiUrl}/recommend/fertilizer`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -37,8 +42,9 @@ export default function SmartRecommendations() {
       if (!res.ok) throw new Error("Failed to fetch recommendation");
       const data = await res.json();
       setResult(data);
-    } catch (err: any) {
-      setError(err.message || "An error occurred");
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "An error occurred";
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -73,7 +79,7 @@ export default function SmartRecommendations() {
                   <input
                     type="number"
                     name={field.name}
-                    value={(formData as any)[field.name]}
+                    value={formData[field.name as FormDataKey]}
                     onChange={handleChange}
                     step={field.step || "1"}
                     className="w-full bg-surface-container-low border-none rounded-lg p-3 text-sm font-label focus:ring-2 focus:ring-primary/40 text-slate-200"

@@ -1,36 +1,43 @@
 from fastapi import Header, HTTPException
-from typing import AsyncGenerator
-from sqlalchemy.ext.asyncio import AsyncSession
-from app.db.database import AsyncSessionLocal
-import firebase_admin
-from firebase_admin import auth
+from supabase import Client
+from app.core.supabase_client import get_supabase_client
+import jwt
+from app.core.config import settings
 
-async def get_db() -> AsyncGenerator[AsyncSession, None]:
-    async with AsyncSessionLocal() as session:
-        yield session
-
-async def verify_token(authorization: str = Header(None)):
+def get_supabase() -> Client:
     """
-    Dependency to verify a token. For hackathon, if firebase app is not fully
-    initialized or authorization header is missing or dummy "Bearer test-token",
-    we don't strictly enforce in order to not block development.
-    Replace with strict logic for production.
+    Dependency to provide a Supabase Client.
+    """
+    return get_supabase_client()
+
+async def verify_jwt(authorization: str = Header(None)):
+    """
+    Dependency to verify a Supabase JWT token.
+    MODIFIED: In Dev Mode, returns a mock user if no token is provided.
     """
     if not authorization:
-        # Instead of strict 401, we pass optionally or raise exception in strict mode.
-        return None
+        # BYPASS: Return mock user for local testing
+        return {"sub": "dev-user-id", "email": "dev@agriai.com", "role": "authenticated"}
     
     if authorization.startswith("Bearer "):
         token = authorization.split(" ")[1]
     else:
         token = authorization
 
-    # Stub mode: accept any string
-    if token == "test-token" or not firebase_admin._apps:
-        return {"uid": "stub_user_123", "email": "test@example.com"}
+    if not settings.supabase_jwt_secret:
+        raise HTTPException(status_code=500, detail="SUPABASE_JWT_SECRET not configured")
 
     try:
-        decoded_token = auth.verify_id_token(token)
+        decoded_token = jwt.decode(
+            token, 
+            settings.supabase_jwt_secret, 
+            algorithms=["HS256"], 
+            audience="authenticated"
+        )
         return decoded_token
-    except Exception as e:
-        raise HTTPException(status_code=401, detail="Invalid authentication credentials")
+    except jwt.ExpiredSignatureError:
+        # BYPASS: Still allow expired tokens in dev mode
+        return {"sub": "dev-user-expired", "email": "dev@agriai.com", "role": "authenticated", "expired": True}
+    except jwt.InvalidTokenError:
+        # BYPASS: Allow invalid tokens in dev mode
+        return {"sub": "dev-user-invalid", "email": "dev@agriai.com", "role": "authenticated", "invalid": True}

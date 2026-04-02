@@ -1,6 +1,6 @@
 "use client";
 
-import { Upload, PlusCircle, Tractor, ShieldAlert, FlaskConical, Sun, CloudRain, Lightbulb, Bug, Droplets } from "lucide-react";
+import { Upload, PlusCircle, Tractor, ShieldAlert, FlaskConical, Sun, CloudRain, Lightbulb } from "lucide-react";
 
 export default function DashboardOverview() {
   return (

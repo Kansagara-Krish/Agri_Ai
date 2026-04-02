@@ -2,7 +2,8 @@
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { ArrowRight, PlayCircle, Droplets, TrendingUp, Cpu } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight, PlayCircle, Droplets, TrendingUp } from "lucide-react";
 
 export default function LandingPage() {
   return (
@@ -45,10 +46,13 @@ export default function LandingPage() {
           <div className="mt-32 w-full grid grid-cols-1 md:grid-cols-12 gap-6 animate-scale-in" style={{ animationDelay: "0.6s" }}>
             {/* Main Preview */}
             <div className="md:col-span-8 rounded-xl overflow-hidden glass-panel border border-white/5 relative group">
-              <img
+              <Image
                 className="w-full h-[400px] object-cover opacity-60 group-hover:scale-110 transition-transform duration-1000"
                 alt="Cinematic aerial view of modern circular farm fields"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXqKvVrRI4b__XPJjFqAZgxsT_Iyp0XA_EsWAAOPXPpvm6_RTkbKIlfkaykybkCG_3MLS-ATNFIpgnaohu8l2vK94phMTmZs1NQOYJSsu3LSV4-NvyU9fIOzbkX4DUkNcyz3BL4ue2u6Jhnu3bIvjL2BqPP0lhiwzcqDp7LwqQ3vTp0Cbiw8PhGmMBI6L6ki_sQVAMBBCLvJfwPXSHHJ0B0fA4F71IoimLVnAxvA_Yn16GV1oUCTYJaF9rZHLKWxQVKbiroDf7j6SZ"
+                width={800}
+                height={400}
+                priority
               />
               <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent" />
               <div className="absolute bottom-8 left-8 text-left">
@@ -98,14 +102,15 @@ export default function LandingPage() {
               <div className="md:w-1/2 p-8 text-left flex flex-col justify-center border-b md:border-b-0 md:border-r border-white/5">
                 <h4 className="text-xl font-headline font-bold mb-4">Hyper-Natural Algorithms</h4>
                 <p className="text-sm text-slate-400 leading-relaxed">
-                  Our AI doesn't just process data; it understands biological cycles, mimicking the natural resilience of the soil.
+                  Our AI doesn&apos;t just process data; it understands biological cycles, mimicking the natural resilience of the soil.
                 </p>
               </div>
               <div className="md:w-1/2 relative min-h-[200px]">
-                <img
+                <Image
                   className="absolute inset-0 w-full h-full object-cover opacity-50"
                   alt="Microscopic laboratory lens"
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNdSavlZF_6zWpFq8z8Bw4d2L-sij-rDSOpm9VYveknl_VEQscT2pyh0xbdZt0lDQxsSIiUnyOlVDt-JwK-Fa9B4z071NE7RC0jfXdCDYhfjUJMXpvgltbMyAN_wLI8T2y9PFP9nie0Z0j7jUMdjjEXBMdsu9czZ5eRaWfTgEBvCUin6EEFQPg7yOSlYHPn6qsX9NVvbUZhMpXhp1--BMbj4GZlMLTqrBBk_Avq1DxY_aaYSc-lEHvXmvm7omZzskxw8YXnuGjGg8K"
+                  fill
                 />
                 <div className="absolute inset-0 bg-gradient-to-l from-surface-container-high/50 to-transparent" />
               </div>

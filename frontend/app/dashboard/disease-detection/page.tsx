@@ -1,6 +1,6 @@
 "use client";
 
-import { UploadCloud, FileImage, ShieldAlert } from "lucide-react";
+import { UploadCloud, FileImage } from "lucide-react";
 
 export default function DiseaseDetection() {
   return (

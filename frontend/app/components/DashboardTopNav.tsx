@@ -1,6 +1,35 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { Search, Languages, Bell } from "lucide-react";
+import Image from "next/image";
+import { createClient } from "../../utils/supabase/client";
 
 export default function DashboardTopNav() {
+  const [userName, setUserName] = useState<string>("Loading...");
+  const supabase = createClient();
+
+  useEffect(() => {
+    async function getProfile() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: profile } = await supabase
+          .from("farmer_profiles")
+          .select("name")
+          .eq("id", user.id)
+          .single();
+        
+        if (profile?.name) {
+          setUserName(profile.name);
+          return;
+        }
+      }
+      // BYPASS: Default to Dev Farmer if no session or profile found
+      setUserName("Dev Farmer 👨‍🌾");
+    }
+    getProfile();
+  }, [supabase]);
+
   return (
     <header className="fixed top-0 left-72 right-0 z-50 h-16 flex justify-between items-center px-8 bg-[#0b1326]/60 backdrop-blur-xl transition-all duration-300">
       <div className="flex items-center gap-6">
@@ -24,14 +53,16 @@ export default function DashboardTopNav() {
         <div className="h-8 w-[1px] bg-outline-variant/20 mx-2"></div>
         <div className="flex items-center gap-3 group cursor-pointer">
           <div className="text-right">
-            <p className="font-headline text-sm font-bold text-on-surface leading-tight">Farmer J. Doe</p>
+            <p className="font-headline text-sm font-bold text-on-surface leading-tight">{userName}</p>
             <p className="font-label text-[10px] text-slate-500 tracking-wider">PREMIUM TIER</p>
           </div>
           <div className="w-10 h-10 rounded-full border-2 border-primary/20 p-0.5 transition-transform group-hover:scale-105">
-            <img
+            <Image
               alt="User Profile"
               className="w-full h-full rounded-full object-cover"
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhkX2dBHRRRgS3sO2D2j7AqZRW5uiW24OUcDS5kYZMqAhzzpebWOVzzCVNyIRAz5Rmz9tRQoYC_nOMwhkfaTjmj5D1RyRQXIHHeRMeaxCuCipVmnaJcS0T9tES4odHW1VERPb9tiOncncbFjGsNt-x5rg45WkrLyjH7v97dCyjDTQ_0L6rRGzCmNwlIFK2T50BOGQfve0wXzmyqdPkqKAERb6Tol5EWshdPPfwefjxl1w6sPPAogCTvKBJj1LtCISR1yDCM_oaT3AD"
+              width={40}
+              height={40}
             />
           </div>
         </div>

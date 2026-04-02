@@ -1,6 +1,7 @@
 "use client";
 
 import { Expand, MapPin } from "lucide-react";
+import Image from "next/image";
 
 export default function MapInsights() {
   return (
@@ -21,10 +22,12 @@ export default function MapInsights() {
       </div>
 
       <div className="flex-1 glass-panel rounded-xl border border-outline-variant/10 overflow-hidden relative group">
-        <img
+        <Image
           alt="Field Map"
           className="w-full h-full object-cover transition-all duration-1000"
           src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnvkui43FrvIoKHu47ZmB5xvaAqqdM_c3SHpqQi9qx1_nLTe16Y7Fb2YXwwZ4XCNK9_lvaFNricDw6IDacKLe-KdPuEQRojG5de46CjCn0zuxapA26Wmxiz_E-WOy6U8tqJzV9s8EO1zBIRGONHuoU0RveUiEQ3YrOkqHYoFxAEs3H50tf3hOg9fCOW_mDwv_X7-AJ0qHTSphdUUnxkcXY9srngJEouNyZ8UZ7gPM-P2GM9XffZorVyozwk-YCuIMHh7hfUlhSErc2"
+          fill
+          priority
         />
         
         {/* Map Overlay Insights */}
