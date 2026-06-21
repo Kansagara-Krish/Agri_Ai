@@ -1,46 +1,37 @@
-import os
-import joblib
-import pandas as pd
 from app.schemas.recommend import FertilizerRecommendationInput, FertilizerRecommendationOutput
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MODEL_DIR = os.path.join(BASE_DIR, "models", "fertilizer_recommendation")
-
-_model = None
-_le = None
-_columns = None
-
-def get_fertilizer_model():
-    global _model, _le, _columns
-    if _model is None:
-        # Load model, label encoder, and features columns
-        _model = joblib.load(os.path.join(MODEL_DIR, "fertilizer_model.pkl"))
-        _le = joblib.load(os.path.join(MODEL_DIR, "label_encoder.pkl"))
-        _columns = joblib.load(os.path.join(MODEL_DIR, "columns.pkl"))
-    return _model, _le, _columns
 
 
 async def recommend_fertilizer(input_data: FertilizerRecommendationInput) -> FertilizerRecommendationOutput:
-    model, le, columns = get_fertilizer_model()
-    
-    input_dict = {
-        'N': input_data.N,
-        'P': input_data.P,
-        'K': input_data.K,
-        'temperature': input_data.temperature,
-        'humidity': input_data.humidity,
-        'ph': input_data.pH,
-        'rainfall': input_data.rainfall
-    }
-    
-    # Needs a 2D array or dataframe for xgboost
-    df = pd.DataFrame([input_dict], columns=columns)
-    
-    prediction = model.predict(df)
-    predicted_fertilizer = le.inverse_transform(prediction)[0]
-    
+    """
+    Stubbed fertilizer recommendation.
+    This avoids loading any ML models and returns a deterministic recommendation
+    based on simple rules so the endpoint works in dev without heavy deps.
+    """
+
+    # Simple rule-based heuristic (stub)
+    N = input_data.N or 0
+    P = input_data.P or 0
+    K = input_data.K or 0
+
+    if N < 40:
+        fertilizer = "Urea (Nitrogen-rich)"
+        dosage = "50 kg/ha"
+        notes = "Soil shows low nitrogen; apply N-rich fertilizer and re-test in 30 days."
+    elif P < 30:
+        fertilizer = "DAP (Phosphorus-rich)"
+        dosage = "100 kg/ha"
+        notes = "Soil phosphorus is low; apply phosphorus-rich fertilizer per crop needs."
+    elif K < 40:
+        fertilizer = "Muriate of Potash (Potassium-rich)"
+        dosage = "40 kg/ha"
+        notes = "Soil potassium is low; apply K fertilizer and monitor crop response."
+    else:
+        fertilizer = "Balanced NPK (e.g., 10-26-26)"
+        dosage = "75 kg/ha"
+        notes = "Soil nutrients are adequate; apply a balanced fertilizer as maintenance."
+
     return FertilizerRecommendationOutput(
-        fertilizer=predicted_fertilizer,
-        dosage="Please adjust dosage based on soil deficiency tests.",
-        notes=f"Predicted optimal fertilizer formulation is {predicted_fertilizer} based on given soil parameters."
+        fertilizer=fertilizer,
+        dosage=dosage,
+        notes=notes,
     )

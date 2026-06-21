@@ -29,7 +29,7 @@ async def get_soil_data(lat: float, lon: float) -> Dict[str, Any]:
                 "moisture": 22.5
             }
         except Exception as e:
-            # Fallback for Hackathon to avoid completely breaking
+            # Fallback for Semester 7 College Project to avoid completely breaking
             return {
                 "N": 45.0,
                 "P": 25.0,

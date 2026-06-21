@@ -1,4 +1,4 @@
-You are an expert Python backend developer. Build a clean, well-structured FastAPI backend for an AgriAI crop yield prediction system (HT202602 hackathon). 
+You are an expert Python backend developer. Build a clean, well-structured FastAPI backend for an AgriAI crop yield prediction system (Semester 7 College Project). 
 
 ## CRITICAL RULE
 DO NOT implement any ML model, load any .pkl file, or write any prediction logic.
@@ -13,7 +13,7 @@ The code structure must make it trivially easy to plug in real models later by r
 - Firebase Admin SDK (token verification middleware — structure only)
 - httpx (for calling external APIs)
 - python-dotenv (.env for all secrets)
-- CORS middleware (allow all origins for hackathon)
+- CORS middleware (allow all origins for Semester 7 College Project)
 
 ## Project Structure
 backend/
@@ -120,7 +120,7 @@ Each stub service function must:
 - Global exception handler returning { error: str, status_code: int }
 - Request logging middleware (log method + path + response time)
 - Rate limiting via slowapi (100 req/min per IP)
-- Full CORS enabled for hackathon
+- Full CORS enabled for Semester 7 College Project
 - requirements.txt with pinned versions
 - Dockerfile with multi-stage build
 - .env.example with all required variables listed

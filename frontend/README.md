@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AgriAI: Crop Yield Prediction System
+### Semester 7 College Project
+
+AgriAI is a modern, AI-powered agricultural intelligence platform designed to assist farmers with data-driven insights. This project was developed as a comprehensive Semester 7 College Project, focusing on predicting crop yields, providing intelligent fertilizer and crop recommendations, and detecting crop diseases using machine learning principles integrated into a full-stack architecture.
+
+## Architecture
+
+The project is split into two main components:
+1. **Frontend (`/frontend`)**: A Next.js 14 web application built with React, Tailwind CSS, Framer Motion, and shadcn/ui. It provides a premium SaaS-like dashboard experience, complete with an interactive farmer profile, real-time weather integration, and empty-state onboarding.
+2. **Backend (`/backend`)**: A highly optimized FastAPI (Python) backend using Pydantic for validation. It features endpoints for all ML prediction models, external API integrations (Open-Meteo for weather, SoilGrids for soil data), and an organized service-layer pattern.
+
+## Core Features
+
+- **Dashboard**: Real-time analytics, weather conditions, and risk scores.
+- **Yield Prediction**: Machine learning-based estimations of harvest volumes depending on environmental parameters.
+- **Disease Detection**: Image-based analysis to identify crop diseases and recommend treatments.
+- **Recommendations**: Data-driven crop and fertilizer suggestions based on soil metrics (N, P, K, pH).
+- **Premium Profile**: A fully interactive account management system with inline editable fields and global state synchronization.
 
 ## Getting Started
 
-First, run the development server:
-
+### Frontend
 ```bash
+cd frontend
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Backend
+```bash
+cd backend
+python -m venv .venv
+source .venv/Scripts/activate  # On Windows
+pip install -r requirements.txt
+uvicorn app.main:app --reload
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech Stack
+- **Frontend**: Next.js, React, Tailwind CSS, Framer Motion, Lucide Icons
+- **Backend**: FastAPI, Python, Pydantic, SQLAlchemy, Uvicorn
+- **Database/Auth**: Supabase (PostgreSQL)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*Developed for Semester 7 College Project requirements.*

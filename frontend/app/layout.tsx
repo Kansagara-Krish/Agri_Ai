@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Manrope } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import clsx from "clsx";
 
@@ -8,8 +8,8 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const manrope = Manrope({
-  variable: "--font-manrope",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
 });
 
@@ -18,21 +18,25 @@ export const metadata: Metadata = {
   description: "Precision Farming Dashboard and Ecosystem",
 };
 
+import { AuthProvider } from "@/context/AuthContext";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <body
         className={clsx(
           inter.variable,
-          manrope.variable,
-          "min-h-full flex flex-col font-body selection:bg-primary/30 selection:text-primary"
+          spaceGrotesk.variable,
+          "min-h-full flex flex-col font-body selection:bg-primary/30 selection:text-primary bg-[#FAFAF8] text-[#0F172A]"
         )}
       >
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
