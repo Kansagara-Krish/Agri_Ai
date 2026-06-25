@@ -46,12 +46,12 @@ function ProfileContent() {
       setProfileData(prev => ({
         ...prev,
         email: user.email || prev.email || "john.doe@agriai.farm",
-        location: user.location || prev.location || "Ahmedabad, Gujarat",
-        farmType: user.farmName || prev.farmType || "Greenhouse Sector 7",
+        location: user.location || "",
+        farmType: user.farmName || "",
         phone: localStorage.getItem("profile_phone") || prev.phone
       }));
-      setFarmSize(localStorage.getItem("profile_farm_size") || "12 acres");
-      setCropType(localStorage.getItem("profile_crop_type") || "Tomato");
+      setFarmSize(localStorage.getItem("profile_farm_size") || "");
+      setCropType(localStorage.getItem("profile_crop_type") || "");
     }
   }, [user]);
 
@@ -66,8 +66,8 @@ function ProfileContent() {
         phone: localStorage.getItem("profile_phone") || "+91 98765 43210",
         location: user?.location || "",
         farmName: user?.farmName || "",
-        farmSize: localStorage.getItem("profile_farm_size") || "12 acres",
-        cropType: localStorage.getItem("profile_crop_type") || "Tomato"
+        farmSize: localStorage.getItem("profile_farm_size") || "",
+        cropType: localStorage.getItem("profile_crop_type") || ""
       });
     } else {
       setShowEditModal(false);
@@ -213,7 +213,7 @@ function ProfileContent() {
                   <span>Member since 2026</span>
                   <div className="flex items-center gap-1 text-[#1B5E20] bg-green-50 px-3 py-1 rounded-full">
                     <MapPin className="w-3 h-3" />
-                    {profileData.location}
+                    {profileData.location || "Location Not Set"}
                   </div>
                 </div>
 
